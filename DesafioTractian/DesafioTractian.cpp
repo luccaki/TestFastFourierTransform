@@ -11,22 +11,13 @@ using namespace std;
 
 void fft(double* in, fftw_complex* out, int sum)
 {
-	// create a DFT plan
 	fftw_plan plan = fftw_plan_dft_r2c_1d(sum, in, out, FFTW_ESTIMATE);
-	// execute the plan
 	fftw_execute(plan);
-	// do some cleaning
 	fftw_destroy_plan(plan);
 	fftw_cleanup();
 }
 
 int main() {
-	/*fftw_complex *x;
-	x = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * N);
-	fftw_complex *y;
-	y = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * N);
-	fftw_complex *z;
-	z = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * N);*/
 	double* x;
 	double* y;
 	double* z;
@@ -57,14 +48,18 @@ int main() {
 			sum++;
 		}
 		myfile.close();
-
 	}
 	fft(x, outx, sum);
 	fft(y, outy, sum);
 	fft(z, outz, sum);
-	for (int i = 0; i < sum; i++) {
-		printf("%f %f %f\n", outx[i][1], outy[i][1], outz[i][1]);
-		//printf("//%f %f %f\n", sqrt((outx[i][0]* outx[i][0])+(outx[i][1]* outx[i][1])), sqrt((outy[i][0] * outy[i][0]) + (outy[i][1] * outy[i][1])), sqrt((outz[i][0] * outz[i][0]) + (outz[i][1] * outz[i][1])));
+	ofstream ofs("output.txt", ofstream::out);
+	double freq = 0.736826270;
+	for (int i = 1; i < 2069; i++) {
+		ofs << sqrt((outx[i][0] * outx[i][0]) + (outx[i][1] * outx[i][1])) << ","
+			<< sqrt((outy[i][0] * outy[i][0]) + (outy[i][1] * outy[i][1])) << "," 
+			<< sqrt((outz[i][0] * outz[i][0]) + (outz[i][1] * outz[i][1])) << "," 
+			<< freq << endl;
+		freq += 0.736826270;
 	}
 	return 0;
 }
