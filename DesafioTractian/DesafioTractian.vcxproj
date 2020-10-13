@@ -78,6 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <ExecutablePath>C:\Users\lucca\Desktop\DesafioTractian\DesafioTractian\fftw-3.3.5-dll64;$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -116,12 +117,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\lucca\Desktop\DesafioTractian\fftw-3.3.5-dll64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\lucca\Desktop\DesafioTractian\DesafioTractian\fftw-3.3.5-dll64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\lucca\Desktop\DesafioTractian\fftw-3.3.5-dll64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\lucca\Desktop\DesafioTractian\DesafioTractian\fftw-3.3.5-dll64;C:\Users\lucca\Desktop\DesafioTractian\fftw-3.3.5-dll64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libfftw3-3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -144,7 +145,19 @@
   <ItemGroup>
     <ClCompile Include="DesafioTractian.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\libfftw.redist.3.3.4\build\native\libfftw.redist.targets" Condition="Exists('..\packages\libfftw.redist.3.3.4\build\native\libfftw.redist.targets')" />
+    <Import Project="..\packages\libfftw.3.3.4\build\native\libfftw.targets" Condition="Exists('..\packages\libfftw.3.3.4\build\native\libfftw.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\libfftw.redist.3.3.4\build\native\libfftw.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libfftw.redist.3.3.4\build\native\libfftw.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\libfftw.3.3.4\build\native\libfftw.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libfftw.3.3.4\build\native\libfftw.targets'))" />
+  </Target>
 </Project>
